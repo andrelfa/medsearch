@@ -4,6 +4,7 @@ import Head from 'next/head'
 import Header from './header';
 import dynamic from 'next/dynamic';
 import Map from "./map";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class Layout extends Component {
 
@@ -22,6 +23,7 @@ class Layout extends Component {
             <title>Test</title>
             <meta charSet='utf-8' />
             <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+            <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.css' rel='stylesheet' />
           </Head>
           {/* <header>
             <nav>

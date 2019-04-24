@@ -50,6 +50,10 @@ class Header extends Component {
           #header {
             margin-bottom: 30px;
           }
+
+          .search-input {
+            width: 300px;
+          }
         `}</style>          
       </div>
     );
