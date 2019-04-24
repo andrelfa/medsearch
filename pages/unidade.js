@@ -5,10 +5,6 @@ import { withRouter } from "next/router";
 
 class Unidade extends Component {
 
-    // static getInitialProps({query}) {
-    //     return {query}
-    // }
-
     componentDidMount() {
         const {router} = this.props
         console.log(router)
