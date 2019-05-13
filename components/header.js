@@ -2,23 +2,24 @@ import React, { Component } from 'react';
 import {
   Navbar,
   NavbarBrand } from 'reactstrap';
+import Link from 'next/link'
 import debounce from 'debounce-promise'
 
 class Header extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {users: []};
+    this.state = {unidades: []};
 
-    this.searchUser = this.searchUser.bind(this);
+    this.searchUnidade = this.searchUnidade.bind(this);
   }
 
-  searchUser() {
-    return fetch("http://localhost:3001/users")
+  searchUnidade() {
+    return fetch("http://localhost:3001/unidade")
       .then((res) => res.json())
       .then(
         (res) => {
-          this.setState({users: res})
+          this.setState({unidades: res})
           console.log('this state', this.state)
         }, (err) => {
           console.error('error on fetch user', err)
@@ -30,15 +31,17 @@ class Header extends Component {
     return (
       <div id="header">
         <Navbar color="light" light expand="md">
-          <NavbarBrand href="/">findhealth</NavbarBrand>
-          <input type="text" className="search-input" placeholder="Digite o que deseja buscar" onChange={debounce(this.searchUser, 500)}/>
+          <NavbarBrand href="/">medsearch</NavbarBrand>
+          <input type="text" className="search-input" placeholder="Digite o que deseja buscar" onChange={debounce(this.searchUnidade, 500)}/>
         </Navbar>
         <div className="results">
-          {this.state.users.map((user, i) =>
+          {this.state.unidades.map((unidade, i) =>
             <div className="item" key={i}>
-              <p>
-                {user.name}
-              </p>
+              <Link href={`/unidade?id=${unidade._id}`} as={`/unidade/${unidade._id}`}>
+                <a>
+                  {unidade.nome}
+                </a>
+              </Link>
             </div>
           )}        
         </div>

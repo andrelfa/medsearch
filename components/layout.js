@@ -53,9 +53,9 @@ class Layout extends Component {
               {children}
           </div>
 
-          <div className="mapa">
+          {/* <div className="mapa">
           <Map></Map>
-          </div>
+          </div> */}
           
           <footer>
             <div className="container">
