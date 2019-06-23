@@ -56,6 +56,7 @@ class Header extends Component {
 
           .search-input {
             width: 300px;
+            padding-left: 10px;            
           }
         `}</style>          
       </div>

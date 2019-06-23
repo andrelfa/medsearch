@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import Router from 'next/router'
 import {Link} from '../routes'
 import Layout from "../components/layout";
 import { withRouter } from "next/router";
+import Map from "../components/map";
 
 class Unidade extends Component {
 
@@ -10,6 +12,11 @@ class Unidade extends Component {
         this.state = {
             unidade: null
         }
+
+        Router.events.on('routeChangeComplete', (url) => {
+            console.log('teste');
+            props.toggle();
+        }); 
     }
 
     componentDidMount() {
@@ -17,12 +24,16 @@ class Unidade extends Component {
         this.searchUser(router.query.id);
     }
 
+    componentWillReceiveProps() {
+        const {router} = this.props
+        this.searchUser(router.query.id);        
+    }
+
     searchUser(userId) {
         return fetch(`http://localhost:3001/unidade/${userId}`)
             .then((res) => res.json())
             .then((res) => {
                 this.setState({unidade: res})
-                console.log('this state', this.state)
             }, (err) => {
                 console.error('error on fetch user', err)
             });
@@ -34,18 +45,73 @@ class Unidade extends Component {
     }
 
     render() {
+        const { unidade } = this.state;
+        const availablePlans = unidade && unidade.planos_atendidos.map((plano) => {
+            return (
+                <li key={plano}>
+                    {plano}
+                </li>
+            )
+        })
+
         return (
             <Layout>
                 <div>
-                    <div className="welcome-text">Unidade!</div>
-                    <Link route='/blog/hello-world'>
-                        <a>Hello unidade</a>
-                    </Link>
+                    {/* {unidade && (
+                        <div className="mapa">
+                            <Map longitude={unidade.longitude} latitude={unidade.latitude}></Map>
+                        </div>
+                    )} */}
+                    {unidade && (
+                        <div className="unidade-container">
+                            <div className="mapa">
+                                <Map longitude={unidade.longitude} latitude={unidade.latitude}></Map>
+                            </div>
+                            <div className="info-container">
+                                <div className="name-photo">
+                                    <div className="name">
+                                        <h2>
+                                            {unidade.nome}
+                                            {/* <img src="/static/img/mainbg.jpg" /> */}
+                                        </h2>
+                                        <p>{unidade.endereco}</p>
+                                    </div>
+                                    <div className="photo">
+                                        <img src={unidade.img} />
+                                    </div>
+                                </div>
+                                <div className="available-plans">
+                                    <p className="bold">Planos atendidos:</p>
+                                    {availablePlans && (
+                                        <ul className="list-inline">
+                                            {availablePlans}
+                                        </ul>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    )}
                     <style jsx>{`
-                    .welcome-text {
-                        font-size: 40px;
-                    }
-                    `}</style>             
+                        .unidade-container {
+                            background: #fff;
+                            border-radius: 20px 20px 0 0;
+                            overflow: hidden;
+                        }
+
+                        .info-container {
+                            padding: 20px;
+                        }                        
+
+                        .info-container p {
+                            font-size:
+                        }
+
+                        .name-photo {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                        }                        
+                    `}</style>
                 </div>
              </Layout>
         );

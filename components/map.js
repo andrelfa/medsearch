@@ -10,8 +10,8 @@ class Map extends Component {
         super(props);
         this.state = {
             viewport: {
-                width: '100vw',
-                height: '70vh',
+                width: '100%',
+                height: '40vh',
                 latitude: -22.907364,
                 longitude: -43.1775717,
                 zoom: 13
@@ -24,13 +24,13 @@ class Map extends Component {
         this.setState({ viewport });
     }
 
-    _renderCityMarker = (city, index) => {
+    _renderCityMarker = (latitude, longitude) => {
         return (
             <Marker
-                key={`marker-${index}`}
-                longitude={city.longitude}
-                latitude={city.latitude} >
+                longitude={longitude}
+                latitude={latitude} >
                 <CityPin size={20} onClick={() => this.setState({ popupInfo: city })} />
+                {/* <CityPin size={20} /> */}
             </Marker>
         );
     }
@@ -51,6 +51,7 @@ class Map extends Component {
     }
 
     render() {
+        const {latitude, longitude} = this.props;
         return (
             <ReactMapGL
                 mapStyle="mapbox://styles/mapbox/streets-v9"
@@ -62,9 +63,10 @@ class Map extends Component {
                     <CityPin size={20} onClick={() => this.setState({popupInfo: city})}/>
                 </Marker> */}
 
-                {UNIDADES.map(this._renderCityMarker)}
+                {/* {UNIDADES.map(this._renderCityMarker)} */}
+                {this._renderCityMarker(latitude, longitude)}
 
-                {this._renderPopup()}
+                {/* {this._renderPopup()} */}
 
                 {/* <div className="fullscreen" style={fullscreenControlStyle}>
                 <FullscreenControl />

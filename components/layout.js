@@ -16,7 +16,8 @@ class Layout extends Component {
     }
   }
 
-  render(children) {
+  render() {
+    const { children } = this.props;
       return (
         <div>
           <Head>
@@ -67,6 +68,16 @@ class Layout extends Component {
                 margin-top: 20px;
             }
           `}</style>     
+
+          <style jsx global>{`
+            body {
+                background: url('/static/img/mainbg.png') no-repeat;
+            }
+
+            .bold {
+              font-weight: bold;
+            }
+          `}</style>               
         </div>
       );
   }
