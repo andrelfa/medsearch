@@ -30,7 +30,7 @@ class Header extends Component {
   render() {
     return (
       <div id="header">
-        <Navbar color="light" light expand="md">
+        <Navbar color="transparent" light expand="md">
           <NavbarBrand href="/">medsearch</NavbarBrand>
           <input type="text" className="search-input" placeholder="Digite o que deseja buscar" onChange={debounce(this.searchUnidade, 500)}/>
         </Navbar>

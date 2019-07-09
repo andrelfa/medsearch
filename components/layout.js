@@ -5,6 +5,7 @@ import Header from './header';
 import dynamic from 'next/dynamic';
 import Map from "./map";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { inspect } from 'util'
 
 class Layout extends Component {
 
@@ -16,38 +17,29 @@ class Layout extends Component {
     }
   }
 
+  static async getInitialProps({ pathname }) {
+    const currentPath = pathname;
+    return { currentPath }
+  }
+
+  componentDidMount() {
+    console.log(this.props)
+  }
+
   render() {
     const { children } = this.props;
       return (
         <div>
           <Head>
-            <title>Test</title>
+            <title>Medsearch</title>
             <meta charSet='utf-8' />
             <meta name='viewport' content='initial-scale=1.0, width=device-width' />
             <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.css' rel='stylesheet' />
           </Head>
-          {/* <header>
-            <nav>
-              <Link route='/'>
-                <a>Home</a>
-              </Link>{' '}
-              |
-              <Link route='/about'>
-                <a>About</a>
-              </Link>{' '}
-              |
-              <Link route='/blog'>
-                <a>Blog</a>
-              </Link>
-              |
-              {' '}
-              <Link route='/blog/hello-world'>
-                  <a>contact me</a>
-              </Link>{' '}
-            </nav>
-          </header> */}
-          <div className="container">
+          <div className="container-fluid header-container">
+            <div className="container">
               <Header />
+            </div>
           </div>
       
           <div className="container">
@@ -60,7 +52,7 @@ class Layout extends Component {
           
           <footer>
             <div className="container">
-              Footer
+              {/* Footer */}
             </div>
           </footer>
           <style jsx>{`
@@ -76,6 +68,10 @@ class Layout extends Component {
 
             .bold {
               font-weight: bold;
+            }
+
+            .header-container {
+                background-color: #f8f9fa!important;
             }
           `}</style>               
         </div>
