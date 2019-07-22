@@ -14,8 +14,8 @@ class Unidade extends Component {
         }
 
         Router.events.on('routeChangeComplete', (url) => {
-            console.log('teste');
             props.toggle();
+            console.log('teste');
         }); 
     }
 
@@ -24,15 +24,11 @@ class Unidade extends Component {
         this.searchUser(router.query.id);
     }
 
-    componentWillReceiveProps() {
-        const {router} = this.props
-        this.searchUser(router.query.id);        
-    }
-
     searchUser(userId) {
         return fetch(`http://localhost:3001/unidade/${userId}`)
             .then((res) => res.json())
             .then((res) => {
+                console.log('res unidade', res);
                 this.setState({unidade: res})
             }, (err) => {
                 console.error('error on fetch user', err)
@@ -40,8 +36,8 @@ class Unidade extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        const {router} = this.props
-        this.searchUser(router.query.id);
+        console.log('router id', nextProps);
+        this.searchUser(nextProps.router.query.id);
     }
 
     render() {

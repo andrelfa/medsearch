@@ -9,17 +9,25 @@ class Header extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {unidades: []};
+    this.state = {
+      unidades: [],
+      showResults: false
+    };
 
     this.searchUnidade = this.searchUnidade.bind(this);
   }
 
-  searchUnidade() {
-    return fetch("http://localhost:3001/unidade")
+  searchUnidade(event) {
+    return fetch("http://localhost:3001/unidade?nome=" + event.target.value)
       .then((res) => res.json())
       .then(
         (res) => {
-          this.setState({unidades: res})
+          if (res) {
+            this.setState({
+              unidades: res,
+              showResults: true
+            });
+          }
           console.log('this state', this.state)
         }, (err) => {
           console.error('error on fetch user', err)
@@ -30,34 +38,70 @@ class Header extends Component {
   render() {
     return (
       <div id="header">
-        <Navbar color="transparent" light expand="md">
+        <Navbar className="nav-header" light expand="md">
           <NavbarBrand href="/">medsearch</NavbarBrand>
-          <input type="text" className="search-input" placeholder="Digite o que deseja buscar" onChange={debounce(this.searchUnidade, 500)}/>
+          <input type="text" className="search-input" placeholder="Digite o que deseja buscar" onChange={this.searchUnidade}/>
         </Navbar>
-        <div className="results">
-          {this.state.unidades.map((unidade, i) =>
-            <div className="item" key={i}>
-              <Link href={`/unidade?id=${unidade._id}`} as={`/unidade/${unidade._id}`}>
-                <a>
-                  {unidade.nome}
-                </a>
-              </Link>
-            </div>
-          )}        
-        </div>
+        {this.state.unidades.length && this.state.showResults ? (
+          <div className="results container">
+            {this.state.unidades.map((unidade, i) =>
+              <div className="item" key={i} onClick={() => this.setState({ showResults: false })}>
+                <Link href={`/unidade?id=${unidade._id}`} as={`/unidade/${unidade._id}`}>
+                  <a>
+                    {unidade.nome}
+                  </a>
+                </Link>
+              </div>
+            )}        
+          </div>          
+        ) : null}
         <style jsx>{`
           .navbar-expand-md {
             justify-content: space-between;
           }
-
+          
           #header {
             margin-bottom: 30px;
+            position: relative;
           }
+
+          .nav-header {
+            background: #f8f9fa !important;
+          }          
 
           .search-input {
             width: 300px;
             padding-left: 10px;            
           }
+
+          .item {
+            margin: 10px 0;
+            border-bottom: 1px solid #d2d2d2;
+          } 
+
+          .item:last-child {
+            border-bottom: 0;
+          }
+
+          .item a {
+            color: #545454;
+            padding: 5px 0;
+            display: inline-block;            
+          }
+
+          .item a:hover {
+            text-decoration: none;
+          }
+
+          .results {
+            position: absolute;
+            top: 56px;
+            border-radius: 0 0 20px 20px;
+            z-index: 5;
+            background: #f8f9fa;
+            box-shadow: 0px 5px 15px -4px;    
+            padding: 20px 30px;        
+          }          
         `}</style>          
       </div>
     );
