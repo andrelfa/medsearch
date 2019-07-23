@@ -34,7 +34,7 @@ class Header extends Component {
         }
       )
   }
-  
+
   render() {
     return (
       <div id="header">
@@ -52,14 +52,14 @@ class Header extends Component {
                   </a>
                 </Link>
               </div>
-            )}        
-          </div>          
+            )}
+          </div>
         ) : null}
         <style jsx>{`
           .navbar-expand-md {
             justify-content: space-between;
           }
-          
+
           #header {
             margin-bottom: 30px;
             position: relative;
@@ -67,17 +67,17 @@ class Header extends Component {
 
           .nav-header {
             background: #f8f9fa !important;
-          }          
+          }
 
           .search-input {
             width: 300px;
-            padding-left: 10px;            
+            padding-left: 10px;
           }
 
           .item {
             margin: 10px 0;
             border-bottom: 1px solid #d2d2d2;
-          } 
+          }
 
           .item:last-child {
             border-bottom: 0;
@@ -86,7 +86,7 @@ class Header extends Component {
           .item a {
             color: #545454;
             padding: 5px 0;
-            display: inline-block;            
+            display: inline-block;
           }
 
           .item a:hover {
@@ -99,10 +99,10 @@ class Header extends Component {
             border-radius: 0 0 20px 20px;
             z-index: 5;
             background: #f8f9fa;
-            box-shadow: 0px 5px 15px -4px;    
-            padding: 20px 30px;        
-          }          
-        `}</style>          
+            box-shadow: 0px 9px 11px -7px;
+            padding: 20px 30px;
+          }
+        `}</style>
       </div>
     );
   }
