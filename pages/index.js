@@ -4,63 +4,107 @@ import Layout from '../components/layout'
 
 class Index extends Component {
 
+  state = {
+    especialidades: [],
+    planos: [],
+  }
+
+  componentDidMount() {
+    this.getPlanos();
+    this.getEspecialidades();
+  }
+
+  getPlanos() {
+    return fetch("http://localhost:3001/plano")
+      .then((res) => res.json())
+      .then(
+        (res) => {
+          this.setState({
+            planos: res
+          });
+        }, (err) => {
+          console.error('error on fetch user', err)
+        }
+      )
+  }
+
+  getEspecialidades() {
+    return fetch("http://localhost:3001/especialidade")
+      .then((res) => res.json())
+      .then(
+        (res) => {
+          this.setState({
+            especialidades: res
+          });
+        }, (err) => {
+          console.error('error on fetch user', err)
+        }
+      )
+  }  
+
   render() {
+      const {planos, especialidades} = this.state;
+      let planoItems, especialidadeItems;
+
+      if (planos.length) planoItems = planos.map((plano, index) => <option key={index}>{plano.nome}</option>);
+      if (especialidades.length) especialidadeItems = especialidades.map((plano, index) => <option key={index}>{plano.nome}</option>);
+
       return (
         <Layout>
-          <div className="container">
-            <div className="col-sm-12 col-md-12">
-              <div class="main-search-container">
-                <input type="text" placeholder="Busque por nome" />
+          <div className="container-fluid main-search">
+            <div className="container">
+              <div className="col-sm-12 col-md-12">
+                <p className="title">Encontre o profissional perfeito pra você</p>
+                <p className="subtitle">Mais de 100 mil unidades e médicos cadastrados.</p>
+                <div className="main-search-container">
+                  <input type="text" placeholder="Busque por nome" />
+                  <select>
+                    <option disabled selected>Plano</option>
+                    {planoItems}
+                  </select>
+                  <select>
+                    <option disabled selected>Especialidade</option>
+                    {especialidadeItems}
+                  </select>                
+                </div>
               </div>
             </div>
           </div>
           <style jsx>{`
-          .navbar-expand-md {
-            justify-content: space-between;
-          }
+            .main-search {
+              padding: 50px 0;
+              margin-top: 240px;
+              background: rgba(91, 127, 149, 0.12)
+            }
 
-          #header {
-            margin-bottom: 30px;
-            position: relative;
-          }
+            p {
+              margin: 0;
+            }
 
-          .nav-header {
-            background: #f8f9fa !important;
-          }
+            .title {
+              font-size: 30px;
+            }
 
-          .search-input {
-            width: 300px;
-            padding-left: 10px;
-          }
+            .subtitle {
+              font-size: 18px;
+            }
 
-          .item {
-            margin: 10px 0;
-            border-bottom: 1px solid #d2d2d2;
-          }
+            .main-search-container {
+              margin-top: 30px;
+            }
 
-          .item:last-child {
-            border-bottom: 0;
-          }
-
-          .item a {
-            color: #545454;
-            padding: 5px 0;
-            display: inline-block;
-          }
-
-          .item a:hover {
-            text-decoration: none;
-          }
-
-          .results {
-            position: absolute;
-            top: 56px;
-            border-radius: 0 0 20px 20px;
-            z-index: 5;
-            background: #f8f9fa;
-            box-shadow: 0px 9px 11px -7px;
-            padding: 20px 30px;
-          }
+            .main-search-container > * {
+              height: 49px;
+              padding-left: 15px;
+              padding-right: 15px;
+              margin-right: 5px;
+              color: #747474;
+              background: #fff;
+              border-radius: 5px;
+              border: 0;
+              box-shadow: 0px 1px 5px 1px #b7b7b7;
+              cursor: pointer;
+            }          
         `}</style>          
         </Layout>
       );

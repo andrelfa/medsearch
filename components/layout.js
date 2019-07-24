@@ -42,9 +42,7 @@ class Layout extends Component {
             </div>
           </div>
       
-          <div className="container">
-              {children}
-          </div>
+            {children}
 
           {/* <div className="mapa">
           <Map></Map>
