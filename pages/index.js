@@ -42,12 +42,26 @@ class Index extends Component {
       )
   }  
 
+  searchUnidades() {
+    return fetch(`http://localhost:3001/unidade?planos=${this.state.selectedPlano}&especialidades=${this.state.selectedEspecialidade}`)
+      .then(
+        (res) => {
+          console.log('res unidade', res);
+          // this.setState({
+          //   especialidades: res
+          // });
+        }, (err) => {
+          console.error('error on fetch user', err)
+        }
+      )    
+  }
+
   render() {
       const {planos, especialidades} = this.state;
       let planoItems, especialidadeItems;
 
-      if (planos.length) planoItems = planos.map((plano, index) => <option key={index}>{plano.nome}</option>);
-      if (especialidades.length) especialidadeItems = especialidades.map((plano, index) => <option key={index}>{plano.nome}</option>);
+      if (planos.length) planoItems = planos.map((plano, index) => <option key={index} value={plano.nome}>{plano.nome}</option>);
+      if (especialidades.length) especialidadeItems = especialidades.map((especialidade, index) => <option key={index} value={especialidade.nome} >{especialidade.nome}</option>);
 
       return (
         <Layout>
@@ -57,15 +71,18 @@ class Index extends Component {
                 <p className="title">Encontre o profissional perfeito pra você</p>
                 <p className="subtitle">Mais de 100 mil unidades e médicos cadastrados.</p>
                 <div className="main-search-container">
-                  <input type="text" placeholder="Busque por nome" />
-                  <select>
+                  {/* <input type="text" placeholder="Busque por nome" /> */}
+                  <select onChange={(event) => this.setState({ selectedPlano: event.target.value })}>
                     <option disabled selected>Plano</option>
                     {planoItems}
                   </select>
-                  <select>
+                  <select onChange={(event) => this.setState({ selectedEspecialidade: event.target.value })}>
                     <option disabled selected>Especialidade</option>
                     {especialidadeItems}
-                  </select>                
+                  </select>             
+                  <button type="button" className="search-btn" onClick={() => this.searchUnidades()}>
+                    Buscar
+                  </button>   
                 </div>
               </div>
             </div>
