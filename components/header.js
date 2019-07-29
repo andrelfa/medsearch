@@ -61,7 +61,6 @@ class Header extends Component {
           }
 
           #header {
-            margin-bottom: 30px;
             position: relative;
           }
 
@@ -86,7 +85,7 @@ class Header extends Component {
           .item a {
             color: #545454;
             padding: 5px 0;
-            display: inline-block;
+            display: block;
           }
 
           .item a:hover {

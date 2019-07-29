@@ -53,22 +53,16 @@ class Unidade extends Component {
         return (
             <Layout>
                 <div>
-                    {/* {unidade && (
-                        <div className="mapa">
-                            <Map longitude={unidade.longitude} latitude={unidade.latitude}></Map>
-                        </div>
-                    )} */}
                     {unidade && (
                         <div className="unidade-container">
                             <div className="mapa">
                                 <Map longitude={unidade.longitude} latitude={unidade.latitude}></Map>
                             </div>
-                            <div className="info-container">
+                            <div className="container info-container">
                                 <div className="name-photo">
                                     <div className="name">
                                         <h2>
                                             {unidade.nome}
-                                            {/* <img src="/static/img/mainbg.jpg" /> */}
                                         </h2>
                                         <p>{unidade.endereco}</p>
                                     </div>
