@@ -14,7 +14,7 @@ class Unidade extends Component {
         }
 
         Router.events.on('routeChangeComplete', (url) => {
-            props.toggle();
+            // props.toggle();
             console.log('teste');
         }); 
     }
@@ -50,13 +50,21 @@ class Unidade extends Component {
             )
         })
 
+        const availableSpecialties = unidade && unidade.especialidades_atendidas.map((especialidade) => {
+          return (
+              <li key={especialidade}>
+                  {especialidade}
+              </li>
+          )
+        })        
+
         return (
             <Layout>
                 <div>
                     {unidade && (
                         <div className="unidade-container">
                             <div className="mapa">
-                                <Map longitude={unidade.longitude} latitude={unidade.latitude}></Map>
+                                <Map unidade={unidade}></Map>
                             </div>
                             <div className="container info-container">
                                 <div className="name-photo">
@@ -70,6 +78,10 @@ class Unidade extends Component {
                                         <img src={unidade.img} />
                                     </div>
                                 </div>
+                                <div className="average-price">
+                                  <p className="bold">Preço médio de consulta:</p>
+                                  <span>R$ 149,00</span>
+                                </div>
                                 <div className="available-plans">
                                     <p className="bold">Planos atendidos:</p>
                                     {availablePlans && (
@@ -78,10 +90,49 @@ class Unidade extends Component {
                                         </ul>
                                     )}
                                 </div>
+                                <div className="available-specialties">
+                                    <p className="bold">Especialidades atendidas:</p>
+                                    {availableSpecialties && (
+                                        <ul className="list-inline">
+                                            {availableSpecialties}
+                                        </ul>
+                                    )}
+                                </div> 
+                                <div className="actions">
+                                    <button type="button" className="default-btn">
+                                      Entre em contato
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     )}
                     <style jsx>{`
+
+                        .actions {
+                          margin-top: 15px;
+                        }
+
+                        .default-btn {
+                          background: 0;
+                          border: 2px solid #5B7F95;
+                          border-radius: 25px;
+                          padding: 9px 31px;
+                          color: #5B7F95;
+                          transition: 0.5s;
+                        }
+
+                        .default-btn:hover {
+                          background: #5B7F95;
+                          border: 2px solid #5B7F95;
+                          border-radius: 25px;
+                          padding: 9px 31px;
+                          color: #fff;
+                        }                        
+
+                        .average-price {
+                          margin-bottom: 20px;                          
+                        }
+
                         .unidade-container {
                             background: #fff;
                             border-radius: 20px 20px 0 0;
